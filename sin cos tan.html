@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{
+	margin: 0;
+	padding: 0;
+}
+
+canvas{
+	
+	border: 1px solid black
+}
+
+</style>
+</head>
+<body>
+<canvas></canvas>
+
+<script>
+var canvas = document.querySelector("canvas");
+canvas.width = window.innerWidth - 6;
+canvas.height = window.innerHeight - 6;
+var c = canvas.getContext('2d');
+
+var x;
+var y;
+var hyp;
+function animate() {
+requestAnimationFrame(animate);
+window.onmousemove = function (e) {
+	x = e.clientX;
+	y = e.clientY
+	hyp = Math.hypot(e.clientX - canvas.width / 2, e.clientY - canvas.height / 2);
+	
+}
+c.clearRect(0, 0, innerWidth, innerHeight)
+c.beginPath();
+c.arc(canvas.width / 2, canvas.height / 2, 100, 0, Math.PI * 2, false);
+c.stroke();
+c.closePath();
+c.beginPath();
+c.moveTo(canvas.width / 2, canvas.height / 2)
+c.lineTo((canvas.width / 2) + ((x - canvas.width / 2) * (100 / hyp)), (canvas.height / 2) + ((y - canvas.height / 2) * (100 / hyp)))
+c.lineTo((canvas.width / 2) + ((x - canvas.width / 2) * (100 / hyp)), (canvas.height / 2))
+c.lineTo((canvas.width / 2), (canvas.height / 2))
+c.stroke();
+c.fillText("sinX = " + -((y - canvas.height / 2) * (100 / hyp)) / 100, 60, 50)
+c.fillText("cosX = " + ((x - canvas.width / 2) * (100 / hyp)) / 100, 60, 100)
+c.fillText("tanX = " + -((y - canvas.height / 2) * (100 / hyp)) / ((x - canvas.width / 2) * (100 / hyp)), 60, 150)
+if ((Math.atan2(((x - canvas.width / 2) * (100 / hyp)), ((y - canvas.height / 2) * (100 / hyp))) * 180 / Math.PI) >= 90) {
+c.fillText("The measure of angle X = " + (Math.round(Math.atan2(((x - canvas.width / 2) * (100 / hyp)), ((y - canvas.height / 2) * (100 / hyp))) * 180 / Math.PI - 90)) , 60, 500)
+}
+if ((Math.atan2(((x - canvas.width / 2) * (100 / hyp)), ((y - canvas.height / 2) * (100 / hyp))) * 180 / Math.PI) < 90) {
+c.fillText("The measure of angle X = " + (Math.round(Math.atan2(((x - canvas.width / 2) * (100 / hyp)), ((y - canvas.height / 2) * (100 / hyp))) * 180 / Math.PI + 270)) , 60, 500)
+}
+c.font = "20px arial"
+c.fillText("x", canvas.width / 2 - 20, canvas.height / 2 + 20)
+c.fillStyle = "red";
+c.fillText("sinY = " + ((x - canvas.width / 2) * (100 / hyp)) / 100, 400, 50)
+c.fillText("cosY = " + -((y - canvas.height / 2) * (100 / hyp)) / 100, 400, 100)
+c.fillText("tanY = " + -((x - canvas.width / 2) * (100 / hyp)) / ((y - canvas.height / 2) * (100 / hyp)), 400, 150)
+c.fillText("y", (canvas.width / 2) + ((x - canvas.width / 2) * (100 / hyp)), (canvas.height / 2) + ((y - canvas.height / 2) * (100 / hyp)))
+
+
+
+c.font = "20px arial"
+c.fillStyle = "blue";
+
+}
+
+
+animate();
+</script>
+</body>
+</html>
